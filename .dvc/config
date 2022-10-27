@@ -2,4 +2,4 @@
     analytics = false
     remote = stech_google_cloud
 ['remote "stech_google_cloud"']
-    url = ../1pIZqqCAFezwlFpZ5aHOOYpkIa0PuwPBG
+    url = gdrive://1KP29nhLoUkYDKArtgLDjBbIWn5oyv1O2
