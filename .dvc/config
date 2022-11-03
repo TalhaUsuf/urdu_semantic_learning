@@ -1,7 +1,8 @@
 [core]
     analytics = false
-    remote = dev_storage
+    remote = stech_google_cloud
 ['remote "stech_google_cloud"']
     url = gdrive://1KP29nhLoUkYDKArtgLDjBbIWn5oyv1O2
+    jobs = 8
 ['remote "dev_storage"']
     url = ssh://dev-ai@10.0.0.23
