@@ -1,0 +1,5 @@
+outs:
+- md5: 5aaf89bc1214d9c6ecf80c4eec88448e.dir
+  size: 3977101496
+  nfiles: 124138
+  path: mswc_microset_16k
