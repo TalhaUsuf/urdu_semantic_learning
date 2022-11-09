@@ -27,8 +27,8 @@ def to_micro_spectrogram(model_settings, audio):
         sample_rate=sample_rate,
         window_size=window_size_ms,
         window_step=window_step_ms,
-        num_channels=model_settings["fingerprint_width"],
-        out_scale=1,
+        num_channels=model_settings["fingerprint_width"], # X-axis the number of filterbank channels to use.
+        out_scale=1, # divide all filterbanks by this number.
         out_type=tf.float32,
     )
     output = tf.multiply(micro_frontend, (10.0 / 256.0))
@@ -37,12 +37,16 @@ def to_micro_spectrogram(model_settings, audio):
 
 def file2spec(model_settings, filepath):
     """there's a version of this that adds bg noise in AudioDataset"""
+
     audio_binary = tf.io.read_file(filepath)
+    # Reference 🔗 https://devdocs.io/tensorflow~2.9/audio/decode_wav
     audio, _ = tf.audio.decode_wav(
         audio_binary,
         desired_channels=1,
-        desired_samples=model_settings["desired_samples"],
+        # An optional int. Defaults to -1. Length of audio requested.
+        desired_samples=model_settings["desired_samples"], # 1 sec = 16k samples
     )
+
     audio = tf.squeeze(audio, axis=-1)
     return to_micro_spectrogram(model_settings, audio)
 
@@ -95,6 +99,7 @@ def prepare_model_settings(
     if length_minus_window < 0:
         spectrogram_length = 0
     else:
+        # the x-axis of spectrogram
         spectrogram_length = 1 + int(length_minus_window / window_stride_samples)
     if preprocess == "average":
         fft_bin_count = 1 + (_next_power_of_two(window_size_samples) / 2)
@@ -127,6 +132,17 @@ def prepare_model_settings(
 
 
 def standard_microspeech_model_settings(label_count: int):
+    """
+    get the configuration for the microspeech model
+
+    Parameters
+    ----------
+    label_count : int
+
+    Returns
+    -------
+    dict
+    """
     return prepare_model_settings(
         label_count=label_count,
         sample_rate=16000,

@@ -8,7 +8,7 @@ import tensorflow as tf
 
 import sys
 
-import multilingual_kws.embedding.input_data as input_data
+from keyword_spotting import input_data
 
 
 def transfer_learn(
